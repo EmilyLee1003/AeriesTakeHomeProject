@@ -21,14 +21,25 @@
                 <th scope="col">Zip Code</th>
             </tr>
         </thead>
-        <tbody> 
+        <tbody>
+            @foreach(var item in Model.listStudents)
+            {
             <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-              
+
+                <td>@item.SchoolCode</td>
+                <td>@item.StudentID</td>
+                <td>@item.FirstName</td>
+                <td>@item.LastName</td>
+                <td>@item.Address</td>
+                <td>@item.City</td>
+                <td>@item.State</td>
+                <td>@item.ZipCode</td>
+
+
             </tr>
-          
+            }
+
+
         </tbody>
     </table>
 </div>
