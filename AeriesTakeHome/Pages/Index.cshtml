@@ -6,7 +6,7 @@
 
 <div class="text-center">
     <h1 class="display-4">Aeries Students</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    
 
     <table class="table table-dark">
         <thead>
@@ -19,6 +19,8 @@
                 <th scope="col">City</th>
                 <th scope="col">State</th>
                 <th scope="col">Zip Code</th>
+                <th scope="col"></th>
+
             </tr>
         </thead>
         <tbody>
@@ -34,12 +36,49 @@
                 <td>@item.City</td>
                 <td>@item.State</td>
                 <td>@item.ZipCode</td>
-
-
+                <td> <a class="btn btn-primary" href="@Url.Action("ContactsInfo", "viewContacts")">View</a></td>
             </tr>
             }
-
-
         </tbody>
     </table>
+
+    <table class="table table-dark">
+        <thead>
+            <tr>
+                <th scope="col">Student ID</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Relationship</th>
+                <th scope="col">Email</th>
+                <th scope="col">Mobile</th>
+                <th scope="col">Address</th>
+                <th scope="col">City</th>
+                <th scope="col">State</th>
+                <th scope="col">Zip Code</th>
+                <th scope="col"></th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var item in Model.listContacts)
+            {
+            <tr>
+                <td>@item.Student_ID</td>
+                <td>@item.FirstName</td>
+                <td>@item.LastName</td>
+                <td>@item.Relationship</td>
+                <td>@item.Email</td>
+                <td>@item.Mobile</td>
+                <td>@item.Address</td>
+                <td>@item.City</td>
+                <td>@item.State</td>
+                <td>@item.ZipCode</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+
+
+
+
 </div>

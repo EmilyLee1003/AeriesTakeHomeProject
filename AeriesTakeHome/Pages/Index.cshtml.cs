@@ -7,6 +7,7 @@ namespace AeriesTakeHome.Pages
     public class IndexModel : PageModel
     {
         public List<StudentInfo> listStudents = new List<StudentInfo>();
+        public List<ContactInfo> listContacts = new List<ContactInfo>();
         private readonly ILogger<IndexModel> _logger;
 
         public IndexModel(ILogger<IndexModel> logger)
@@ -43,6 +44,32 @@ namespace AeriesTakeHome.Pages
                             }
                         }
                     }
+
+                    String sql_2 = "SELECT * FROM Contacts";
+                    using(SqlCommand command = new SqlCommand(sql_2, connection))
+                    {
+                        using(SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while(reader.Read())
+                            {
+                                ContactInfo contactInfo = new ContactInfo();
+                                contactInfo.Student_ID= reader.GetInt32(0);
+                                contactInfo.FirstName=reader.GetString(1);
+                                contactInfo.LastName=reader.GetString(2);
+                                contactInfo.Relationship=reader.GetString(3);
+                                contactInfo.Email=reader.GetString(4);
+                                contactInfo.Mobile=reader.GetString(5);
+                                contactInfo.Address=reader.GetString(6);
+                                contactInfo.City=reader.GetString(7);
+                                contactInfo.State=reader.GetString(8);
+                                contactInfo.ZipCode=reader.GetInt32(9);
+                               
+                                listContacts.Add(contactInfo);
+                            }
+                        }
+                    }
+
+                    
                 }
             }
             catch (Exception ex)
@@ -50,6 +77,15 @@ namespace AeriesTakeHome.Pages
                 Console.WriteLine("ERROR" + ex.ToString());
             }
         }
+
+        
+
+ 
+
+
+
+
+
 
         public class StudentInfo
         {
@@ -62,6 +98,20 @@ namespace AeriesTakeHome.Pages
             public string State;
             public int ZipCode;
 
+        }
+
+        public class ContactInfo
+        {
+            public int Student_ID;
+            public string FirstName;
+            public string LastName;
+            public string Relationship;
+            public string Email;
+            public string Mobile;
+            public string Address;
+            public string City;
+            public string State;
+            public int ZipCode;
         }
     }
 }
