@@ -1,5 +1,6 @@
-using Stystem;
+using System;
 using Microsoft.AspNetCore.Builder;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,10 +8,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
-
-app.MapGet("/api/Home",
-    (Func<string>) (()=> "you did it!"));
-
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

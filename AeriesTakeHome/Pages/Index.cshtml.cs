@@ -5,9 +5,11 @@ using System.Data.SqlClient;
 namespace AeriesTakeHome.Pages
 {
     public class IndexModel : PageModel
-    {
+    { 
         public List<StudentInfo> listStudents = new List<StudentInfo>();
         public List<ContactInfo> listContacts = new List<ContactInfo>();
+        public List<SelectedInfo> listSelected =new List<SelectedInfo>(); 
+       
         private readonly ILogger<IndexModel> _logger;
 
         public IndexModel(ILogger<IndexModel> logger)
@@ -45,8 +47,8 @@ namespace AeriesTakeHome.Pages
                         }
                     }
 
-                    String sql_2 = "SELECT * FROM Contacts";
-                    using(SqlCommand command = new SqlCommand(sql_2, connection))
+                    String sql_Contacts = "SELECT * FROM Contacts";
+                    using(SqlCommand command = new SqlCommand(sql_Contacts, connection))
                     {
                         using(SqlDataReader reader = command.ExecuteReader())
                         {
@@ -68,7 +70,7 @@ namespace AeriesTakeHome.Pages
                             }
                         }
                     }
-
+                   
                     
                 }
             }
@@ -78,14 +80,54 @@ namespace AeriesTakeHome.Pages
             }
         }
 
-        
+        public void viewButton(object sender,EventArgs e)
+        {
+            Console.WriteLine("button clicked");
 
- 
+        }
+      
+        protected void buttonSelected( object sender,EventArgs e)
+        {
+            try
+            {
+                System.Diagnostics.Debug.WriteLine(e.ToString(), "Button clicked");
 
+              String connectionString = "Data Source=localhost;Initial Catalog=AeriesData;Integrated Security=True";
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                     String sql_Selected = "SELECT * FROM Contacts WHERE Student_ID =99400001";
+                    using(SqlCommand command = new SqlCommand(sql_Selected, connection))
+                    {
+                        using(SqlDataReader reader=command.ExecuteReader())
+                        {
+                            while(reader.Read())
+                            {
+                                SelectedInfo selectedInfo = new SelectedInfo();
+                                selectedInfo.Student_ID= reader.GetInt32(0);
+                                selectedInfo.FirstName=reader.GetString(1);
+                                selectedInfo.LastName=reader.GetString(2);
+                                selectedInfo.Relationship=reader.GetString(3);
+                                selectedInfo.Email=reader.GetString(4);
+                                selectedInfo.Mobile=reader.GetString(5);
+                               selectedInfo.Address=reader.GetString(6);
+                                selectedInfo.City=reader.GetString(7);
+                                selectedInfo.State=reader.GetString(8);
+                                selectedInfo.ZipCode=reader.GetInt32(9);
+                                
+                                listSelected.Add(selectedInfo);
 
+                            }
+                        }
+                    }  
 
-
-
+                }
+            }
+              catch (Exception ex)
+            {
+                Console.WriteLine("ERROR" + ex.ToString());
+            }
+        }
 
         public class StudentInfo
         {
@@ -113,5 +155,20 @@ namespace AeriesTakeHome.Pages
             public string State;
             public int ZipCode;
         }
+
+        public class SelectedInfo
+        {
+            public int Student_ID;
+            public string FirstName;
+            public string LastName;
+            public string Relationship;
+            public string Email;
+            public string Mobile;
+            public string Address;
+            public string City;
+            public string State;
+            public int ZipCode;
+        }
     }
 }
+
